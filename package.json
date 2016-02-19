@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "dotenv": "^2.0.0",
+    "twitter": "^1.2.5"
+  }
+}

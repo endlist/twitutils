@@ -22,8 +22,5 @@ client.get('friends/list', { count: 200 }, function(error, collection, response)
 
   for (user of collection.users) {
     console.log(user.screen_name);
-    // if (user.screen_name == "joryisabird") {
-    //   console.log(user.id);
-    // }
   }
 });

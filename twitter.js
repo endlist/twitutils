@@ -8,22 +8,30 @@ var client = new Twitter({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
-client.get('friends/list', { count: 200 }, function(error, collection, response){
-  if(error) throw error;
-  // console.log(collection);
-  // console.log(response);
-  // if (collection.next_cursor) {
-  //   client.get('friends/list', {cursor: collection.next_cursor}, function(error, collection, response) {
-  //     for (user of collection.users) {
-  //       console.log(user.screen_name);
-  //     }
-  //   });
-  // }
+function loop(cursor) {
+  if (cursor == 0) { return; }
 
-  for (user of collection.users) {
-    console.log(user.screen_name);
-    // if (user.screen_name == "joryisabird") {
-    //   console.log(user.id);
+  console.log('CURSOR', cursor);
+
+  client.get('friends/list', { count: 20, cursor: cursor }, function(error, collection, response){
+    console.log(JSON.stringify(error));
+    if(error) throw error;
+    // console.log(collection);
+    // console.log(response);
+    // if (collection.next_cursor) {
+    //   client.get('friends/list', {cursor: collection.next_cursor}, function(error, collection, response) {
+    //     for (user of collection.users) {
+    //       console.log(user.screen_name);
+    //     }
+    //   });
     // }
-  }
-});
+
+    for (user of collection.users) {
+      console.log(user.screen_name);
+    }
+
+    loop(collection.next_cursor);
+  });
+}
+
+loop(-1);
